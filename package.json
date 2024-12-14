@@ -1,0 +1,15 @@
+{
+  "name": "random",
+  "version": "1.0.0",
+  "main": "src/main.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "author": "Slobodan Zivanovic",
+  "license": "",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
