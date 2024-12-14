@@ -82,3 +82,5 @@ function example(): void {
 }
 
 example();
+
+export { initializeState, randomUint32, createMTState };
