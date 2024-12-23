@@ -22,7 +22,34 @@
 
 <body>
   <canvas id="canvas" width="460" height="460"></canvas>
-  <script type="module" src="../dist/main.js"></script>
+  <script type="module">
+    import {
+      createMTState,
+      initializeState,
+      randomUint32,
+    } from "./../dist/main.js";
+
+    function drawRandomNumbers() {
+      const state = createMTState();
+      initializeState(state, 19650218);
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const width = canvas.width;
+      const height = canvas.height;
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const value = randomUint32(state);
+          const r = (value >> 16) & 0xff;
+          const g = (value >> 8) & 0xff;
+          const b = value & 0xff;
+          ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+          ctx.fillRect(x, y, 1, 1);
+        }
+      }
+    }
+
+    drawRandomNumbers();
+  </script>
 </body>
 
 </html>

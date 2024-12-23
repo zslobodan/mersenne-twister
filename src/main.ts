@@ -71,14 +71,4 @@ function createMTState(): MTState {
   };
 }
 
-function example(): void {
-  const state = createMTState();
-  // 19650218UL
-  initializeState(state, 19650218);
-
-  for (let i = 0; i < 5; i++) {
-    console.log(randomUint32(state));
-  }
-}
-
-example();
+export { initializeState, randomUint32, createMTState };
