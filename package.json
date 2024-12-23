@@ -1,0 +1,13 @@
+{
+  "name": "mersenne-twister",
+  "version": "0.0.1",
+  "main": "src/main.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "author": "Slobodan Zivanovic",
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
