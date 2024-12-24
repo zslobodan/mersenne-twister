@@ -1,0 +1,69 @@
+Mersenne prime
+
+n E N is composite -> 2n - 1 is also composite
+
+Mp = 2p - 1 -> p is prime
+
+p = 2: M2 = 2^2 - 1 = 4 - 1 = 3
+p = 3: M3 = 2^3 - 1 = 8 - 1 = 7
+p = 5: M5 = 2^5 - 1 = 32 - 1 = 31
+
+For a number to be a Mersenne prime, two conditions need to be met
+
+1. p must be a prime number
+2. the result 2p - 1 must be a prime number
+
+Mersenne Twister
+
+1. Mersenne Prime 2^19937-1 -> MT19937 uses 32-bit word length
+2. MT19937-64 -> 64-bit
+
+- w-bit word length: MT generates integers in range [0,2^W-1]
+- recurrence degree: n = 624
+- middle word: m = 397
+- separation point of word: r = 31
+- maskings: UMASK = (0xffffffff << r), LMASK = (0xffffffff >>> (w-r))
+- twist matrix parameter: a = 0x9908b0df
+- tempering parameters: (u,s,t,l) = (11, 7, 15, 18)
+- tempering bit masks: (b,c) = (0x9d2c5680, 0xefc60000)
+- init parameter: f = 1812433253
+
+For MT19937 (32-bit):
+(w,n,m,r) = (32,624,397,31)
+a = 0x9908b0df
+(u,d) = (11,0xffffffff)
+(s,b) = (7,0x9d2c5680)
+(t,c) = (15,0xefc60000)
+l = 18
+
+For MT19937-64 (64-bit):
+(w,n,m,r) = (64,312,156,31)
+a = 0xb5026f5aa96619e9
+(u,d) = (29,0x5555555555555555)
+(s,b) = (17,0x71d67fffeда60000)
+(t,c) = (37,0xfff7eee000000000)
+l = 43
+
+State initialization
+
+For a given sees S0, the initial state array X0...X_{n-1} is generated as
+
+X0 = S0
+Xi = f x (Xi-1 XOR (Xi - 1 >>> (w-2))) + i, for i = 1,...,n-1
+
+Random number generation
+
+1. State transition: for each k, calculate next state value
+
+j = k - (n-1) (mod n)
+X = (Xk & UMASK) | (Xj & LMASK)
+xA = (X >>> 1) XOR (X & 1 ? a : 0)
+j = k - (n-m) (mod n)
+Xk = Xj XOR xA
+
+2. Tempering transform
+
+y = x XOR (x >>> u)
+y = y XOR ((y << s) & b)
+y = y XOR ((y << t) & c)
+z = y XOR (y >>> l)
